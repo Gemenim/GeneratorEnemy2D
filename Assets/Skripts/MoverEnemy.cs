@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class MoverEnemy : MonoBehaviour
 {
-    private float _speedX;
-    private float _speedY;
+    private Vector3 _speed;
 
-    public void SetDirection(float speedX, float speedY)
+    public void SetDirection(Vector3 speed)
     {
-        _speedX = speedX;
-        _speedY = speedY;
+        _speed = speed;
     }
 
     private void Update()
     {
-        float positionX = _speedX * Time.deltaTime;
-        float positionY = _speedY * Time.deltaTime;
-        transform.Translate(positionX, positionY, 0);
+        Vector3 moving = _speed * Time.deltaTime;
+        transform.Translate(moving);
 
         if (transform.position.x > 20 || transform.position.y > 20 || transform.position.x < -20 || transform.position.y < -20)
             Destroy(gameObject);

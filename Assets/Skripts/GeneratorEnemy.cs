@@ -33,8 +33,8 @@ public class GeneratorEnemy : MonoBehaviour
                 var newEnemy = Instantiate(_enemy, transform.position, Quaternion.identity);
                 float speedX = Random.Range(_minSpeedX, _maxSpeedX);
                 float speedY = Random.Range(_minSpeedY, _maxSpeedY);
-                newEnemy.SetDirection(speedX, speedY);
-                Debug.Log(speedX + ", " + speedY);
+                Vector3 speed = new Vector3 (speedX, speedY, 0);
+                newEnemy.SetDirection(speed);
                 _isActiv = false;
             }
         }
