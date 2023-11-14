@@ -5,30 +5,28 @@ using UnityEngine;
 
 public class ActivityAuditor : MonoBehaviour
 {
-    private GameObject[] _gameObjects;
+    private GeneratorEnemy[] _enemyGenerator;
 
     private void Start()
     {
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("EnemyGenerator");
-        _gameObjects = gameObjects;
+        _enemyGenerator = GetComponentsInChildren<GeneratorEnemy>();
     }
 
     private void Update()
     {
         if (CheckActivity())
         {
-            int randomIndex = Random.Range(0, _gameObjects.Length);
-            _gameObjects[randomIndex].GetComponent<GeneratorEnemy>().TurnOn();
+            int randomIndex = Random.Range(0, _enemyGenerator.Length);
+            _enemyGenerator[randomIndex].TurnOn();
         }
     }
-
     private bool CheckActivity()
     {
         bool isVerified = true;
 
-        foreach (GameObject gameObject in _gameObjects)
+        foreach (GeneratorEnemy enemyGenerator in _enemyGenerator)
         {
-            if (gameObject.GetComponent<GeneratorEnemy>().IsActiv)
+            if (enemyGenerator.IsActiv)
             {
                 isVerified = false;
                 break;
