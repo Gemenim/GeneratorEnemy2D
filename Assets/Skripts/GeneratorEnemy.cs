@@ -8,7 +8,6 @@ public class GeneratorEnemy : MonoBehaviour
     [SerializeField] private float _cooldown;
 
     private bool _isActiv = false;
-    private float _timer = 0;
     private float _maxSpeedX = 5.0f;
     private float _maxSpeedY = 5.0f;
     private float _minSpeedX = -5.0f;
@@ -21,22 +20,28 @@ public class GeneratorEnemy : MonoBehaviour
         _isActiv = true;
     }
 
-    private void Update()
+    private void Start()
     {
-        if (_isActiv)
-        {
-            _timer += Time.deltaTime;
+        var creatEnemyJob = CreatEnemy();
+        StartCoroutine(creatEnemyJob);
+    }
 
-            if (_timer >= _cooldown)
+    private IEnumerator CreatEnemy()
+    {
+        while (true)
+        {
+            if (_isActiv)
             {
-                _timer = 0;
                 var newEnemy = Instantiate(_enemy, transform.position, Quaternion.identity);
                 float speedX = Random.Range(_minSpeedX, _maxSpeedX);
                 float speedY = Random.Range(_minSpeedY, _maxSpeedY);
-                Vector3 speed = new Vector3 (speedX, speedY, 0);
+                Vector3 speed = new Vector3(speedX, speedY, 0);
                 newEnemy.SetDirection(speed);
                 _isActiv = false;
             }
+
+            var coldown = new WaitForSeconds(_cooldown);
+            yield return coldown;
         }
     }
 }

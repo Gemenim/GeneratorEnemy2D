@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoverEnemy : MonoBehaviour
 {
     private Vector3 _speed;
+    private float _maxPosition = 20.0f;
 
     public void SetDirection(Vector3 speed)
     {
@@ -16,7 +17,8 @@ public class MoverEnemy : MonoBehaviour
         Vector3 moving = _speed * Time.deltaTime;
         transform.Translate(moving);
 
-        if (transform.position.x > 20 || transform.position.y > 20 || transform.position.x < -20 || transform.position.y < -20)
+        if (transform.position.x > _maxPosition || transform.position.y > _maxPosition
+            || transform.position.x < -_maxPosition || transform.position.y < -_maxPosition)
             Destroy(gameObject);
     }
 }

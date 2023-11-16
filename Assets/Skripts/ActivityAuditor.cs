@@ -6,20 +6,30 @@ using UnityEngine;
 public class ActivityAuditor : MonoBehaviour
 {
     private GeneratorEnemy[] _enemyGenerator;
+    private float _cooldown = 2;
 
     private void Start()
     {
         _enemyGenerator = GetComponentsInChildren<GeneratorEnemy>();
+        var chooseSpawnerJob = ChooseSpawner();
+        StartCoroutine(chooseSpawnerJob);
     }
 
-    private void Update()
+    private IEnumerator ChooseSpawner()
     {
-        if (CheckActivity())
+        while (true)
         {
-            int randomIndex = Random.Range(0, _enemyGenerator.Length);
-            _enemyGenerator[randomIndex].TurnOn();
+            if (CheckActivity())
+            {
+                int randomIndex = Random.Range(0, _enemyGenerator.Length);
+                _enemyGenerator[randomIndex].TurnOn();
+            }
+
+            var cooldown = new WaitForSeconds(_cooldown);
+            yield return cooldown;
         }
     }
+
     private bool CheckActivity()
     {
         bool isVerified = true;
